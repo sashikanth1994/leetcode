@@ -1,0 +1,20 @@
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        prices = [float("inf")] * n
+        prices[src] = 0
+        print(prices)
+        for i in range(k+1):
+            tempPrices = prices.copy()
+            print(f"run number: {i}")
+            for s, d, p in flights:
+                if prices[s] == float("inf"):
+                    continue
+                elif (prices[s] + p < prices[d] and tempPrices[d] == prices[d]) or (tempPrices[d] != prices[d] and prices[s] + p < tempPrices[d]):
+                    tempPrices[d] = prices[s] + p
+                    print(f"tempPrices: {tempPrices}")
+            prices = tempPrices
+            print(prices)
+        if prices[dst] == float("inf"):
+            return -1
+        else:
+            return prices[dst]
